@@ -25,6 +25,7 @@ The model code itself lives in [ai2cm/ace](https://github.com/ai2cm/ace).
 | `tables/` | Each table as LaTeX (`.tex`), Markdown (`.md`) and unrounded values (`.csv`) |
 | `TABLES.md` | All tables, viewable on GitHub |
 | `configs/` | Training and evaluation configs for every run in the figures ([README](configs/README.md)) |
+| `THIRD_PARTY_NOTICES.md` | Licenses of the dependencies in `pyproject.toml` |
 
 ## Setup
 
@@ -61,4 +62,11 @@ If `data/paper_figures.pkl` is missing, the notebook calls `fetch_wandb.py`, whi
 
 ## License
 
-Apache 2.0, see [LICENSE](LICENSE).
+Copyright © 2026 The Allen Institute for Artificial Intelligence.
+
+Apache 2.0, see [LICENSE](LICENSE). The dependencies in `pyproject.toml` are listed with their licenses in
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
+The shipped data, figures and tables contain modified Copernicus Climate Change Service information 2026
+(ERA5, CC BY 4.0). Neither the European Commission nor ECMWF is responsible for any use that may be made
+of the Copernicus information or data it contains.
