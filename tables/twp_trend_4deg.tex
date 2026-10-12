@@ -1,0 +1,21 @@
+\begin{table}[H]
+  \caption{Errors of the annual global-mean $TWP$ of the 46-year ERA5 rollouts of the 4\textdegree{} models over the AIMIP training (1979--2008) and test (2015--2024) periods. RMSE: root-mean-square of model minus ERA5 over the years of the period. Bias: mean of model minus ERA5. Trend error: model minus ERA5 least-squares linear trend. Values are mean $\pm$ standard deviation over 5 seeds; bold marks the smaller magnitude of each ACE2S / M-ACE2S pair.}
+  \label{table:twp_trend_4deg}
+  \centering
+  \small
+  \resizebox{\linewidth}{!}{%
+  \begin{tabular}{lcccccc}
+    \toprule
+     & \multicolumn{2}{c}{RMSE (kg\,m$^{-2}$)} & \multicolumn{2}{c}{Bias (kg\,m$^{-2}$)} & \multicolumn{2}{c}{Trend error (kg\,m$^{-2}$\,decade$^{-1}$)} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+     & Train & Test & Train & Test & Train & Test \\
+    \midrule
+    ACE2S (GMR off) & 0.21 $\pm$ 0.02 & \textbf{0.54} $\pm$ 0.12 & $-$0.02 $\pm$ 0.08 & \textbf{$-$0.50} $\pm$ 0.14 & 0.116 $\pm$ 0.033 & \textbf{$-$0.010} $\pm$ 0.057 \\
+    M-ACE2S (GMR off) & \textbf{0.19} $\pm$ 0.01 & 0.70 $\pm$ 0.03 & \textbf{0.01} $\pm$ 0.04 & $-$0.67 $\pm$ 0.03 & \textbf{0.055} $\pm$ 0.012 & $-$0.059 $\pm$ 0.091 \\
+    \midrule
+    ACE2S (GMR on) & 0.19 $\pm$ 0.02 & \textbf{0.62} $\pm$ 0.06 & $-$0.08 $\pm$ 0.05 & \textbf{$-$0.60} $\pm$ 0.06 & 0.061 $\pm$ 0.012 & \textbf{0.028} $\pm$ 0.083 \\
+    M-ACE2S (GMR on) & 0.19 $\pm$ 0.01 & 0.72 $\pm$ 0.02 & \textbf{0.02} $\pm$ 0.02 & $-$0.69 $\pm$ 0.02 & \textbf{0.042} $\pm$ 0.011 & $-$0.130 $\pm$ 0.099 \\
+    \bottomrule
+  \end{tabular}
+  }
+\end{table}

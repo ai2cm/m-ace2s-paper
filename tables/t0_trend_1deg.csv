@@ -1,0 +1,5 @@
+gmr,model,rmse_train,rmse_test,bias_train,bias_test,trend_err_train,trend_err_test,rmse_train_std,rmse_test_std,bias_train_std,bias_test_std,trend_err_train_std,trend_err_test_std,n_seeds
+GMR off,ACE2S,0.582648,0.569651,-0.231792,0.558977,0.522597,0.289676,,,,,,,1
+GMR off,M-ACE2S,0.411816,0.965856,0.13542,0.914079,0.193586,-0.60377,,,,,,,1
+GMR on,ACE2S,0.890012,1.46191,0.680077,1.44975,0.563179,0.119174,,,,,,,1
+GMR on,M-ACE2S,0.415955,0.943601,0.171521,0.893275,0.246379,-0.62686,,,,,,,1

@@ -1,0 +1,26 @@
+[project]
+name = "m-ace2s-paper"
+version = "0.1.0"
+description = "Reproduces the figures and tables of the M-ACE2S paper (Variable Masking for Climate Emulation in ACE)."
+requires-python = ">=3.11,<3.12"
+license = "Apache-2.0"
+dependencies = [
+    "plotly==6.8.0",
+    "kaleido==1.3.0",
+    "choreographer==1.3.0",
+    "logistro==2.0.1",
+    "orjson==3.11.9",
+    "pandas==3.0.3",
+    "numpy==2.4.6",
+    "ipykernel==7.2.0",
+    "nbformat==5.10.4",
+    "nbconvert==7.17.1",
+    "jupyterlab==4.5.7",
+    "pyyaml==6.0.3",
+]
+
+[project.optional-dependencies]
+private = ["wandb==0.29.0", "tqdm==4.68.2"]
+
+[tool.uv]
+package = false

@@ -1,0 +1,16 @@
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# wandb download cache (fetch_wandb.py)
+.wandb_cache/
+wandb/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

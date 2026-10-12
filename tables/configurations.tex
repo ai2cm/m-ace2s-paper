@@ -1,0 +1,18 @@
+\begin{table}[H]
+  \caption{Trained configurations, one row per experiment; the released configuration files give every run. Data: horizontal resolution and time step of the ERA5 training data. Masking: uniform 0--$k$ masks a number of input channels drawn uniformly from $\{0, \ldots, k\}$, Bernoulli masks each channel with probability $p$; unless stated, one mask is shared per batch and the model is told which channels are masked by appended channels. Epochs: single-step (SS) and multi-step (MS) training (\autoref{appendix:multistep_finetuning}). Shown in: section or appendix with the results. No configuration takes CO$_2$ or any other anthropogenic forcing as an input. $^{a}$One seed per model: seed 1, except seed 0 for M-ACE2S with GMR.}
+  \label{table:configurations}
+  \centering
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{lllp{3.3cm}lll}
+    \toprule
+    Experiment & Data & GMR & Masking & Seeds & Epochs & Shown in \\
+    \midrule
+    Main & 1\textdegree{}, 6 h & off, on & none, uniform 0--20 & 1$^{a}$ & 150 SS + 20 MS & \ref{sec:results}, \ref{appendix:additional_1deg_results} \\
+    Main & 4\textdegree{}, 1 day & off, on & none, uniform 0--20 & 0--4 & 150 SS & \ref{appendix:additional_4deg_results} \\
+    Mask distribution & 4\textdegree{}, 1 day & off, on & Bernoulli $p = 0.23$ & 0--4 & 150 SS & \ref{appendix:masking_ablations} \\
+    Mask sharing & 4\textdegree{}, 1 day & on & uniform 0--10 / 0--20, per batch / sample & 0 & 150 SS & \ref{appendix:masking_ablations} \\
+    Mask indicator & 4\textdegree{}, 1 day & on & uniform 0--20, channels / FiLM / both & 0 & 150 SS & \ref{appendix:masking_ablations} \\
+    \bottomrule
+  \end{tabular}
+\end{table}

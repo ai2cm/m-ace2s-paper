@@ -1,0 +1,19 @@
+\begin{table}[H]
+  \caption{Errors of the annual global-mean $T_0$ of the 46-year ERA5 rollouts of the 1\textdegree{} models over the AIMIP training (1979--2008) and test (2015--2024) periods. RMSE: root-mean-square of model minus ERA5 over the years of the period. Bias: mean of model minus ERA5. Trend error: model minus ERA5 least-squares linear trend. Each model is a single training run; bold marks the smaller magnitude of each ACE2S / M-ACE2S pair.}
+  \label{table:t0_trend_1deg}
+  \centering
+  \small
+  \begin{tabular}{lcccccc}
+    \toprule
+     & \multicolumn{2}{c}{RMSE (K)} & \multicolumn{2}{c}{Bias (K)} & \multicolumn{2}{c}{Trend error (K\,decade$^{-1}$)} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+     & Train & Test & Train & Test & Train & Test \\
+    \midrule
+    ACE2S (GMR off) & 0.58 & \textbf{0.57} & $-$0.23 & \textbf{0.56} & 0.523 & \textbf{0.290} \\
+    M-ACE2S (GMR off) & \textbf{0.41} & 0.97 & \textbf{0.14} & 0.91 & \textbf{0.194} & $-$0.604 \\
+    \midrule
+    ACE2S (GMR on) & 0.89 & 1.46 & 0.68 & 1.45 & 0.563 & \textbf{0.119} \\
+    M-ACE2S (GMR on) & \textbf{0.42} & \textbf{0.94} & \textbf{0.17} & \textbf{0.89} & \textbf{0.246} & $-$0.627 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
