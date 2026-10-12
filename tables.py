@@ -291,7 +291,7 @@ def config_table(config_dir=CONFIG_DIR):
         r"model: seed 1, except seed 0 for M-ACE2S with GMR.")
     # The .tex keeps the paper's wording; TABLES.md states how masks are actually shared:
     # each GPU draws its own mask (seeded by rank) and shares it across its local batch.
-    tex_caption = caption.replace("{sharing}", "one mask is shared per batch and")
+    tex_caption = caption.replace("{sharing}", "one mask is shared across each GPU's batch and")
     md_caption = caption.replace(
         "{sharing}", "one mask is drawn per GPU at each forward step and shared by that "
         "GPU's samples (4 at 4°, 1 in 1° pretraining, 2 in 1° fine-tuning; masks differ "
