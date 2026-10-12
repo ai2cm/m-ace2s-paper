@@ -56,14 +56,6 @@ The figure PDFs included by the paper, in paper order. Each thumbnail links to i
 
 [![fig:46yr_era5_training_metrics_1deg_gmroff](figures/png/varmasking_v8_seed_v5/aimip_checkpoint_time_mean_norm_rmse_channel_mean-gmroff.png)](figures/varmasking_v8_seed_v5/aimip_checkpoint_time_mean_norm_rmse_channel_mean-gmroff.pdf)
 
-### `fig:46yr_era5_T0_1deg` — Annual-mean T0, GMR off, 1°
-
-[![fig:46yr_era5_T0_1deg](figures/png/varmasking_v8_seed_v5/long_46year_annual_air_temperature_0-gmroff-mstepftbestinf.png)](figures/varmasking_v8_seed_v5/long_46year_annual_air_temperature_0-gmroff-mstepftbestinf.pdf)
-
-### `fig:46yr_era5_T0_1deg` — Annual-mean T0, GMR on, 1°
-
-[![fig:46yr_era5_T0_1deg](figures/png/varmasking_v8_seed_v5/long_46year_annual_air_temperature_0-gmron-mstepftbestinf.png)](figures/varmasking_v8_seed_v5/long_46year_annual_air_temperature_0-gmron-mstepftbestinf.pdf)
-
 ### `fig:46yr_era5_Q3_1deg` — Annual-mean q^T_3, GMR off, 1°
 
 [![fig:46yr_era5_Q3_1deg](figures/png/varmasking_v8_seed_v5/long_46year_annual_specific_total_water_3-gmroff-mstepftbestinf.png)](figures/varmasking_v8_seed_v5/long_46year_annual_specific_total_water_3-gmroff-mstepftbestinf.pdf)
@@ -80,11 +72,11 @@ The figure PDFs included by the paper, in paper order. Each thumbnail links to i
 
 [![fig:46yr_era5_TWP_1deg](figures/png/varmasking_v8_seed_v5/long_46year_annual_total_water_path-gmron-mstepftbestinf.png)](figures/varmasking_v8_seed_v5/long_46year_annual_total_water_path-gmron-mstepftbestinf.pdf)
 
-### `fig:46yr_era5_Psfc_1deg` — Annual-mean P_sfc, GMR off, 1°
+### `fig:46yr_era5_Psfc_1deg` — Annual-mean surface precipitation rate (P_sfc, `PRATEsfc`), GMR off, 1°
 
 [![fig:46yr_era5_Psfc_1deg](figures/png/varmasking_v8_seed_v5/long_46year_annual_PRATEsfc-gmroff-mstepftbestinf.png)](figures/varmasking_v8_seed_v5/long_46year_annual_PRATEsfc-gmroff-mstepftbestinf.pdf)
 
-### `fig:46yr_era5_Psfc_1deg` — Annual-mean P_sfc, GMR on, 1°
+### `fig:46yr_era5_Psfc_1deg` — Annual-mean surface precipitation rate (P_sfc, `PRATEsfc`), GMR on, 1°
 
 [![fig:46yr_era5_Psfc_1deg](figures/png/varmasking_v8_seed_v5/long_46year_annual_PRATEsfc-gmron-mstepftbestinf.png)](figures/varmasking_v8_seed_v5/long_46year_annual_PRATEsfc-gmron-mstepftbestinf.pdf)
 
@@ -108,14 +100,6 @@ The figure PDFs included by the paper, in paper order. Each thumbnail links to i
 
 [![fig:46yr_era5_T7_4deg](figures/png/varmasking_v8_seed_v3/long_46year_annual_air_temperature_7-gmron.png)](figures/varmasking_v8_seed_v3/long_46year_annual_air_temperature_7-gmron.pdf)
 
-### `fig:46yr_era5_T0_4deg` — Annual-mean T0, GMR off, 4°
-
-[![fig:46yr_era5_T0_4deg](figures/png/varmasking_v8_seed_v3/long_46year_annual_air_temperature_0-gmroff.png)](figures/varmasking_v8_seed_v3/long_46year_annual_air_temperature_0-gmroff.pdf)
-
-### `fig:46yr_era5_T0_4deg` — Annual-mean T0, GMR on, 4°
-
-[![fig:46yr_era5_T0_4deg](figures/png/varmasking_v8_seed_v3/long_46year_annual_air_temperature_0-gmron.png)](figures/varmasking_v8_seed_v3/long_46year_annual_air_temperature_0-gmron.pdf)
-
 ### `fig:46yr_era5_Q3_4deg` — Annual-mean q^T_3, GMR off, 4°
 
 [![fig:46yr_era5_Q3_4deg](figures/png/varmasking_v8_seed_v3/long_46year_annual_specific_total_water_3-gmroff.png)](figures/varmasking_v8_seed_v3/long_46year_annual_specific_total_water_3-gmroff.pdf)
@@ -132,11 +116,11 @@ The figure PDFs included by the paper, in paper order. Each thumbnail links to i
 
 [![fig:46yr_era5_TWP_4deg](figures/png/varmasking_v8_seed_v3/long_46year_annual_total_water_path-gmron.png)](figures/varmasking_v8_seed_v3/long_46year_annual_total_water_path-gmron.pdf)
 
-### `fig:46yr_era5_Psfc_4deg` — Annual-mean P_sfc, GMR off, 4°
+### `fig:46yr_era5_Psfc_4deg` — Annual-mean surface precipitation rate (P_sfc, `PRATEsfc`), GMR off, 4°
 
 [![fig:46yr_era5_Psfc_4deg](figures/png/varmasking_v8_seed_v3/long_46year_annual_PRATEsfc-gmroff.png)](figures/varmasking_v8_seed_v3/long_46year_annual_PRATEsfc-gmroff.pdf)
 
-### `fig:46yr_era5_Psfc_4deg` — Annual-mean P_sfc, GMR on, 4°
+### `fig:46yr_era5_Psfc_4deg` — Annual-mean surface precipitation rate (P_sfc, `PRATEsfc`), GMR on, 4°
 
 [![fig:46yr_era5_Psfc_4deg](figures/png/varmasking_v8_seed_v3/long_46year_annual_PRATEsfc-gmron.png)](figures/varmasking_v8_seed_v3/long_46year_annual_PRATEsfc-gmron.pdf)
 

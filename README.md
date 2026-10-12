@@ -5,7 +5,7 @@ Code, data and configs for the paper **Variable Masking for Climate Emulation in
 <!-- TODO: add arXiv link once available -->
 
 - **Figures:** regenerate every figure from shipped data. See [Setup](#setup) and [`FIGURES.md`](FIGURES.md).
-- **Tables:** RMSE, bias and trend error of T7, T0 and TWP over the training and test periods, and the trained configurations, regenerated from shipped data and `configs/`. See [`TABLES.md`](TABLES.md).
+- **Tables:** RMSE, bias and trend error of T7 and TWP over the training and test periods, and the trained configurations, regenerated from shipped data and `configs/`. See [`TABLES.md`](TABLES.md).
 - **Training and evaluation:** [`configs/`](configs/) has the exact config of every run behind the figures, each pinned to the [ACE](https://github.com/ai2cm/ace) commit it ran on. See [`configs/README.md`](configs/README.md). The training data is built for an Ai2-internal pipeline, so these configs will not run publicly as-is.
 
 The model code itself lives in [ai2cm/ace](https://github.com/ai2cm/ace).
@@ -16,7 +16,7 @@ The model code itself lives in [ai2cm/ace](https://github.com/ai2cm/ace).
 |---|---|
 | `paper_figures.ipynb` | Notebook: interactive plotly figures, styled as in the paper |
 | `plotting.py` | Public plotting helpers used by the notebook |
-| `paper_tables.ipynb` | Notebook: RMSE / bias / trend-error tables (T7, T0, TWP) and configuration table |
+| `paper_tables.ipynb` | Notebook: RMSE / bias / trend-error tables (T7, TWP) and configuration table |
 | `tables.py` | Table helpers used by `paper_tables.ipynb` |
 | `fetch_wandb.py` | Private: rebuilds `data/paper_figures.pkl` from private wandb runs (not needed to reproduce figures) |
 | `data/paper_figures.pkl` | Shipped data for all figures |

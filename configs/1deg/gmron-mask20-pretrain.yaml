@@ -1,6 +1,6 @@
 # M-ACE2S paper | 1deg, GMR on, uniform masking (up to 20 vars) | pretraining (single-step, 150 epochs)
 #
-# Exact config run for the paper (body below is unmodified).
+# Exact config run for the paper (YAML content unmodified; leading comments from the original removed).
 # Run from the root of https://github.com/ai2cm/ace checked out at the commit below:
 #   ACE commit: 7d757c1138905da921a802cb0f7a27beaf52a72a (branch exp/alexey8)
 #   https://github.com/ai2cm/ace/tree/7d757c1138905da921a802cb0f7a27beaf52a72a

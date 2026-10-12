@@ -1,6 +1,6 @@
 # Training and evaluation configs
 
-These are the configs for every run behind the paper's figures. Each file holds the config exactly as it ran, unmodified. A header at the top of each file gives:
+These are the configs for every run behind the paper's figures. Each file holds the config exactly as it ran: the YAML content is unmodified, but leading comments from the original ACE file were removed. A header at the top of each file gives:
 
 - the [ACE](https://github.com/ai2cm/ace) commit it ran on, with a link;
 - the run command and GPU count;
@@ -21,9 +21,9 @@ These are the configs for every run behind the paper's figures. Each file holds 
 |---|---|
 | `gmron` / `gmroff` | Global mean removal on / off |
 | `mask0` | No masking (ACE2S baseline) |
-| `mask10`, `mask20` | Uniform masking: each step masks k ~ U{0..N} input channels |
+| `mask10`, `mask20` | Uniform masking: each forward step masks k ~ U{0..N} input channels |
 | `bern10` | Bernoulli masking: each input masked with rate 0.2326 (about 10 of 43 on average) |
-| `maskbatch` / `masksample` | One mask per batch / per sample (ablation) |
+| `maskbatch` / `masksample` | One mask per per-GPU batch (shared by that GPU's samples, drawn independently on each GPU) / one mask per sample (ablation) |
 | `indicator-{concat,film,both}` | How the model is told which channels are masked (ablation) |
 | `pretrain` → `finetune` → `eval` | 1°: 150-epoch single-step training, then 20-epoch multi-step fine-tuning, then evaluation |
 | `train` → `eval` | 4°: training, then evaluation |
@@ -62,8 +62,8 @@ The original filenames of the 1° configs in the ACE repo contain `4deg`, but th
 
 The datasets are on Ai2-internal storage and are **not publicly available**:
 
-- 1°: `2026-03-19-era5-1deg-8layer-1940-2025.zarr` (6-hourly) and `2026-03-19-era5-1deg-8layer-stats-1990-2019/`
-- 4°: `2026-04-17-era5-4deg-8layer-daily-1940-2025.zarr` (daily) and `2026-04-17-era5-4deg-8layer-daily-stats-1990-2019/`
+- 1°: `2026-03-19-era5-1deg-8layer-1940-2025.zarr` (6-hourly) and stats in `2026-03-19-era5-1deg-8layer-stats-1990-2019/2026-03-19-era5-1deg-8layer-1940-2025/` (`centering.nc`, `scaling-full-field.nc`, `scaling-residual.nc`)
+- 4°: `2026-04-17-era5-4deg-8layer-daily-1940-2025.zarr` (daily) and stats in `2026-04-17-era5-4deg-8layer-daily-stats-1990-2019/2026-03-19-era5-4deg-8layer-1940-2025/` (`centering.nc`, `scaling-full-field.nc`, `scaling-residual.nc`)
 
 The ACE repo has the pipeline that produced them, at the same commits as the configs: `scripts/era5/` (ERA5 ingest) and `scripts/data_process/configs/era5-{1,4}deg-8layer-1940-2025.yaml` (stats and daily coarsening).
 
@@ -81,17 +81,15 @@ Each eval config loads the checkpoint from its upstream training config, as stat
 | `fig:46yr_era5_T7_indicator_comparison_4deg` | Annual-mean T7, masking-information variants, 4° | [`4deg/gmron-mask20-indicator-concat-eval.yaml`](4deg/gmron-mask20-indicator-concat-eval.yaml)<br>[`4deg/gmron-mask20-indicator-film-eval.yaml`](4deg/gmron-mask20-indicator-film-eval.yaml)<br>[`4deg/gmron-mask20-indicator-both-eval.yaml`](4deg/gmron-mask20-indicator-both-eval.yaml) |
 | `fig:46yr_era5_T7_gmroff_1deg` | Annual-mean T7, GMR off, 1° | [`1deg/gmroff-mask0-eval.yaml`](1deg/gmroff-mask0-eval.yaml)<br>[`1deg/gmroff-mask20-eval.yaml`](1deg/gmroff-mask20-eval.yaml) |
 | `fig:46yr_era5_training_metrics_1deg_gmroff` | Training/validation loss and 5-year inference error, GMR off, 1° | [`1deg/gmroff-mask0-pretrain.yaml`](1deg/gmroff-mask0-pretrain.yaml)<br>[`1deg/gmroff-mask20-pretrain.yaml`](1deg/gmroff-mask20-pretrain.yaml) |
-| `fig:46yr_era5_T0_1deg` | Annual-mean T0, 1° | [`1deg/gmroff-mask0-eval.yaml`](1deg/gmroff-mask0-eval.yaml)<br>[`1deg/gmroff-mask20-eval.yaml`](1deg/gmroff-mask20-eval.yaml)<br>[`1deg/gmron-mask0-eval.yaml`](1deg/gmron-mask0-eval.yaml)<br>[`1deg/gmron-mask20-eval.yaml`](1deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_era5_Q3_1deg` | Annual-mean q^T_3, 1° | [`1deg/gmroff-mask0-eval.yaml`](1deg/gmroff-mask0-eval.yaml)<br>[`1deg/gmroff-mask20-eval.yaml`](1deg/gmroff-mask20-eval.yaml)<br>[`1deg/gmron-mask0-eval.yaml`](1deg/gmron-mask0-eval.yaml)<br>[`1deg/gmron-mask20-eval.yaml`](1deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_era5_TWP_1deg` | Annual-mean TWP, 1° | [`1deg/gmroff-mask0-eval.yaml`](1deg/gmroff-mask0-eval.yaml)<br>[`1deg/gmroff-mask20-eval.yaml`](1deg/gmroff-mask20-eval.yaml)<br>[`1deg/gmron-mask0-eval.yaml`](1deg/gmron-mask0-eval.yaml)<br>[`1deg/gmron-mask20-eval.yaml`](1deg/gmron-mask20-eval.yaml) |
-| `fig:46yr_era5_Psfc_1deg` | Annual-mean P_sfc, 1° | [`1deg/gmroff-mask0-eval.yaml`](1deg/gmroff-mask0-eval.yaml)<br>[`1deg/gmroff-mask20-eval.yaml`](1deg/gmroff-mask20-eval.yaml)<br>[`1deg/gmron-mask0-eval.yaml`](1deg/gmron-mask0-eval.yaml)<br>[`1deg/gmron-mask20-eval.yaml`](1deg/gmron-mask20-eval.yaml) |
+| `fig:46yr_era5_Psfc_1deg` | Annual-mean surface precipitation rate (P_sfc, `PRATEsfc`), 1° | [`1deg/gmroff-mask0-eval.yaml`](1deg/gmroff-mask0-eval.yaml)<br>[`1deg/gmroff-mask20-eval.yaml`](1deg/gmroff-mask20-eval.yaml)<br>[`1deg/gmron-mask0-eval.yaml`](1deg/gmron-mask0-eval.yaml)<br>[`1deg/gmron-mask20-eval.yaml`](1deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_time_mean_rmse_era5_1deg` | Time-mean RMSE, 1° | [`1deg/gmroff-mask0-eval.yaml`](1deg/gmroff-mask0-eval.yaml)<br>[`1deg/gmroff-mask20-eval.yaml`](1deg/gmroff-mask20-eval.yaml)<br>[`1deg/gmron-mask0-eval.yaml`](1deg/gmron-mask0-eval.yaml)<br>[`1deg/gmron-mask20-eval.yaml`](1deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_time_mean_bias_era5_1deg` | Time-mean bias, 1° | [`1deg/gmroff-mask0-eval.yaml`](1deg/gmroff-mask0-eval.yaml)<br>[`1deg/gmroff-mask20-eval.yaml`](1deg/gmroff-mask20-eval.yaml)<br>[`1deg/gmron-mask0-eval.yaml`](1deg/gmron-mask0-eval.yaml)<br>[`1deg/gmron-mask20-eval.yaml`](1deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_era5_T7_4deg` | Annual-mean T7, 4° | [`4deg/gmroff-mask0-eval.yaml`](4deg/gmroff-mask0-eval.yaml)<br>[`4deg/gmroff-mask20-eval.yaml`](4deg/gmroff-mask20-eval.yaml)<br>[`4deg/gmron-mask0-eval.yaml`](4deg/gmron-mask0-eval.yaml)<br>[`4deg/gmron-mask20-eval.yaml`](4deg/gmron-mask20-eval.yaml) |
-| `fig:46yr_era5_T0_4deg` | Annual-mean T0, 4° | [`4deg/gmroff-mask0-eval.yaml`](4deg/gmroff-mask0-eval.yaml)<br>[`4deg/gmroff-mask20-eval.yaml`](4deg/gmroff-mask20-eval.yaml)<br>[`4deg/gmron-mask0-eval.yaml`](4deg/gmron-mask0-eval.yaml)<br>[`4deg/gmron-mask20-eval.yaml`](4deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_era5_Q3_4deg` | Annual-mean q^T_3, 4° | [`4deg/gmroff-mask0-eval.yaml`](4deg/gmroff-mask0-eval.yaml)<br>[`4deg/gmroff-mask20-eval.yaml`](4deg/gmroff-mask20-eval.yaml)<br>[`4deg/gmron-mask0-eval.yaml`](4deg/gmron-mask0-eval.yaml)<br>[`4deg/gmron-mask20-eval.yaml`](4deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_era5_TWP_4deg` | Annual-mean TWP, 4° | [`4deg/gmroff-mask0-eval.yaml`](4deg/gmroff-mask0-eval.yaml)<br>[`4deg/gmroff-mask20-eval.yaml`](4deg/gmroff-mask20-eval.yaml)<br>[`4deg/gmron-mask0-eval.yaml`](4deg/gmron-mask0-eval.yaml)<br>[`4deg/gmron-mask20-eval.yaml`](4deg/gmron-mask20-eval.yaml) |
-| `fig:46yr_era5_Psfc_4deg` | Annual-mean P_sfc, 4° | [`4deg/gmroff-mask0-eval.yaml`](4deg/gmroff-mask0-eval.yaml)<br>[`4deg/gmroff-mask20-eval.yaml`](4deg/gmroff-mask20-eval.yaml)<br>[`4deg/gmron-mask0-eval.yaml`](4deg/gmron-mask0-eval.yaml)<br>[`4deg/gmron-mask20-eval.yaml`](4deg/gmron-mask20-eval.yaml) |
+| `fig:46yr_era5_Psfc_4deg` | Annual-mean surface precipitation rate (P_sfc, `PRATEsfc`), 4° | [`4deg/gmroff-mask0-eval.yaml`](4deg/gmroff-mask0-eval.yaml)<br>[`4deg/gmroff-mask20-eval.yaml`](4deg/gmroff-mask20-eval.yaml)<br>[`4deg/gmron-mask0-eval.yaml`](4deg/gmron-mask0-eval.yaml)<br>[`4deg/gmron-mask20-eval.yaml`](4deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_time_mean_rmse_era5_4deg` | Time-mean RMSE, 4° | [`4deg/gmroff-mask0-eval.yaml`](4deg/gmroff-mask0-eval.yaml)<br>[`4deg/gmroff-mask20-eval.yaml`](4deg/gmroff-mask20-eval.yaml)<br>[`4deg/gmron-mask0-eval.yaml`](4deg/gmron-mask0-eval.yaml)<br>[`4deg/gmron-mask20-eval.yaml`](4deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_time_mean_bias_era5_4deg` | Time-mean bias, 4° | [`4deg/gmroff-mask0-eval.yaml`](4deg/gmroff-mask0-eval.yaml)<br>[`4deg/gmroff-mask20-eval.yaml`](4deg/gmroff-mask20-eval.yaml)<br>[`4deg/gmron-mask0-eval.yaml`](4deg/gmron-mask0-eval.yaml)<br>[`4deg/gmron-mask20-eval.yaml`](4deg/gmron-mask20-eval.yaml) |
 | `fig:46yr_era5_training_metrics_4deg_gmron` | Training/validation loss and 5-year inference error, GMR on, 4° | [`4deg/gmron-mask0-train.yaml`](4deg/gmron-mask0-train.yaml)<br>[`4deg/gmron-mask20-train.yaml`](4deg/gmron-mask20-train.yaml) |
@@ -102,5 +100,6 @@ Each eval config loads the checkpoint from its upstream training config, as stat
 These links and IDs only work inside Ai2:
 
 - **wandb runs and Beaker experiment IDs** are in each config header. The wandb projects (`ai2cm/VarMasking8`, `ai2cm/VarMaskingInfoComparison`) are private.
-- **Launch:** gantry on Beaker via `configs/experiments/<experiment>/run-ace-train.sh` at the pinned commit. Settings were workspace `ai2/ace`, budget `ai2/atec-climate`, clusters titan/jupiter, and `--weka climate-default:/climate-default`.
+- **Launch:** gantry on Beaker at the pinned commit, via `configs/experiments/<experiment>/run-ace-train.sh` for pretrain, finetune and 4° training (`torchrun -m fme.ace.train`) or `configs/experiments/<experiment>/run-ace-eval.sh` for evals (`python -I run_eval_suite.py`). Settings were workspace `ai2/ace` (except the runs listed below), budget `ai2/atec-climate`, clusters titan and/or jupiter (1° finetunes, 1° evals and the bern10 evals ran on titan only), and `--weka climate-default:/climate-default`.
+- **Workspace exceptions:** these 11 runs ran in workspace `ai2/climate-titan`: `1deg/gmron-mask0-finetune.yaml` (Beaker `01M0DG7R49A2F4E13H3DJZ7YM2`) and all 5 seeds each of `4deg/gmroff-bern10-eval.yaml` and `4deg/gmron-bern10-eval.yaml` (Beaker IDs in their headers).
 - **GPUs:** 1° pretrain used 8× H100/B200; 1° finetune used 4× B200; 4° training used 2× H100/B200; evals used 1 GPU.

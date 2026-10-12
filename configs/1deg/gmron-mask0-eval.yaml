@@ -1,6 +1,6 @@
 # M-ACE2S paper | 1deg, GMR on, no masking | evaluation (inference suite)
 #
-# Exact config run for the paper (body below is unmodified).
+# Exact config run for the paper (YAML content unmodified; leading comments from the original removed).
 # Run from the root of https://github.com/ai2cm/ace checked out at the commit below:
 #   ACE commit: b5abfa4a0ff88f7b4f7fc01bf11e75f49ff004fd (branch alexey8-mstepft)
 #   https://github.com/ai2cm/ace/tree/b5abfa4a0ff88f7b4f7fc01bf11e75f49ff004fd
@@ -10,7 +10,7 @@
 # Input checkpoint: `/ckpt.tar` is `training_checkpoints/best_inference_ckpt.tar`
 # written by 1deg/gmron-mask0-finetune.yaml.
 #
-# Paper figures: fig:46yr_era5_T7_1deg, fig:46yr_era5_time_mean_rmse_gmron_1deg, fig:46yr_era5_T0_1deg, fig:46yr_era5_Q3_1deg, fig:46yr_era5_TWP_1deg, fig:46yr_era5_Psfc_1deg, fig:46yr_time_mean_rmse_era5_1deg, fig:46yr_time_mean_bias_era5_1deg
+# Paper figures: fig:46yr_era5_T7_1deg, fig:46yr_era5_time_mean_rmse_gmron_1deg, fig:46yr_era5_Q3_1deg, fig:46yr_era5_TWP_1deg, fig:46yr_era5_Psfc_1deg, fig:46yr_time_mean_rmse_era5_1deg, fig:46yr_time_mean_bias_era5_1deg
 #
 # Data paths (/climate-default/...) are Ai2-internal; see ../README.md.
 #

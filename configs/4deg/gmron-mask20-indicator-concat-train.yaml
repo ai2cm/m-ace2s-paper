@@ -1,6 +1,6 @@
 # M-ACE2S paper | 4deg, GMR on, uniform masking (up to 20 vars), mask indicator as concatenated input channels (indicator ablation) | training
 #
-# Exact config run for the paper (body below is unmodified).
+# Exact config run for the paper (YAML content unmodified; leading comments from the original removed).
 # Run from the root of https://github.com/ai2cm/ace checked out at the commit below:
 #   ACE commit: b3f785c444dd32f7c25029d185535991ee2fe366 (branch exp/alexey-varmask-batch-comparison)
 #   https://github.com/ai2cm/ace/tree/b3f785c444dd32f7c25029d185535991ee2fe366

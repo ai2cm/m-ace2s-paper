@@ -24,28 +24,6 @@ Errors of the annual global-mean T_7 of the 46-year ERA5 rollouts of the 4° mod
 | ACE2S (GMR on) | 0.10 ± 0.01 | 0.26 ± 0.05 | **−0.02** ± 0.05 | −0.25 ± 0.05 | −0.050 ± 0.007 | −0.227 ± 0.044 |
 | M-ACE2S (GMR on) | **0.08** ± 0.01 | **0.17** ± 0.03 | 0.03 ± 0.02 | **−0.16** ± 0.03 | **−0.031** ± 0.004 | **−0.202** ± 0.040 |
 
-## `t0_trend_1deg`
-
-Errors of the annual global-mean T_0 of the 46-year ERA5 rollouts of the 1° models over the AIMIP training (1979–2008) and test (2015–2024) periods. RMSE: root-mean-square of model minus ERA5 over the years of the period. Bias: mean of model minus ERA5. Trend error: model minus ERA5 least-squares linear trend. Each model is a single training run; bold marks the smaller magnitude of each ACE2S / M-ACE2S pair.
-
-| | RMSE (K): Train | RMSE (K): Test | Bias (K): Train | Bias (K): Test | Trend error (K decade⁻¹): Train | Trend error (K decade⁻¹): Test |
-|---|---|---|---|---|---|---|
-| ACE2S (GMR off) | 0.58 | **0.57** | −0.23 | **0.56** | 0.523 | **0.290** |
-| M-ACE2S (GMR off) | **0.41** | 0.97 | **0.14** | 0.91 | **0.194** | −0.604 |
-| ACE2S (GMR on) | 0.89 | 1.46 | 0.68 | 1.45 | 0.563 | **0.119** |
-| M-ACE2S (GMR on) | **0.42** | **0.94** | **0.17** | **0.89** | **0.246** | −0.627 |
-
-## `t0_trend_4deg`
-
-Errors of the annual global-mean T_0 of the 46-year ERA5 rollouts of the 4° models over the AIMIP training (1979–2008) and test (2015–2024) periods. RMSE: root-mean-square of model minus ERA5 over the years of the period. Bias: mean of model minus ERA5. Trend error: model minus ERA5 least-squares linear trend. Values are mean ± standard deviation over 5 seeds; bold marks the smaller magnitude of each ACE2S / M-ACE2S pair.
-
-| | RMSE (K): Train | RMSE (K): Test | Bias (K): Train | Bias (K): Test | Trend error (K decade⁻¹): Train | Trend error (K decade⁻¹): Test |
-|---|---|---|---|---|---|---|
-| ACE2S (GMR off) | 0.77 ± 0.15 | 0.96 ± 0.56 | 0.38 ± 0.51 | 0.92 ± 0.59 | **0.356** ± 0.196 | **0.252** ± 0.313 |
-| M-ACE2S (GMR off) | **0.53** ± 0.11 | **0.80** ± 0.09 | **0.20** ± 0.13 | **0.77** ± 0.08 | 0.384 ± 0.053 | −0.457 ± 0.352 |
-| ACE2S (GMR on) | **0.54** ± 0.04 | **0.46** ± 0.18 | 0.04 ± 0.15 | **0.44** ± 0.18 | **0.455** ± 0.040 | **−0.010** ± 0.130 |
-| M-ACE2S (GMR on) | 0.57 ± 0.05 | 0.81 ± 0.18 | **0.00** ± 0.23 | 0.79 ± 0.18 | 0.481 ± 0.055 | 0.040 ± 0.438 |
-
 ## `twp_trend_1deg`
 
 Errors of the annual global-mean TWP of the 46-year ERA5 rollouts of the 1° models over the AIMIP training (1979–2008) and test (2015–2024) periods. RMSE: root-mean-square of model minus ERA5 over the years of the period. Bias: mean of model minus ERA5. Trend error: model minus ERA5 least-squares linear trend. Each model is a single training run; bold marks the smaller magnitude of each ACE2S / M-ACE2S pair.
@@ -70,7 +48,7 @@ Errors of the annual global-mean TWP of the 46-year ERA5 rollouts of the 4° mod
 
 ## `configurations`
 
-Trained configurations, one row per experiment; the released configuration files give every run. Data: horizontal resolution and time step of the ERA5 training data. Masking: uniform 0–k masks a number of input channels drawn uniformly from {0, …, k}, Bernoulli masks each channel with probability p; unless stated, one mask is shared per batch and the model is told which channels are masked by appended channels. Epochs: single-step (SS) and multi-step (MS) training (`appendix:multistep_finetuning`). Shown in: section or appendix with the results. No configuration takes CO_2 or any other anthropogenic forcing as an input. ᵃOne seed per model: seed 1, except seed 0 for M-ACE2S with GMR.
+Trained configurations, one row per experiment; the released configuration files give every run. Data: horizontal resolution and time step of the ERA5 training data. Masking: uniform 0–k masks a number of input channels drawn uniformly from {0, …, k}, Bernoulli masks each channel with probability p; unless stated, one mask is drawn per GPU at each forward step and shared by that GPU's samples (4 at 4°, 1 in 1° pretraining, 2 in 1° fine-tuning; masks differ across GPUs), and the model is told which channels are masked by appended channels. Epochs: single-step (SS) and multi-step (MS) training (`appendix:multistep_finetuning`). Shown in: section or appendix with the results. No configuration takes CO_2 or any other anthropogenic forcing as an input. ᵃOne seed per model: seed 1, except seed 0 for M-ACE2S with GMR.
 
 | Experiment | Data | GMR | Masking | Seeds | Epochs | Shown in |
 |---|---|---|---|---|---|---|

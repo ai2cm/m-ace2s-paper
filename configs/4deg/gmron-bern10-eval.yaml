@@ -1,6 +1,6 @@
 # M-ACE2S paper | 4deg, GMR on, Bernoulli masking (per-variable rate 0.2326) | evaluation (inference suite)
 #
-# Exact config run for the paper (body below is unmodified).
+# Exact config run for the paper (YAML content unmodified; leading comments from the original removed).
 # Run from the root of https://github.com/ai2cm/ace checked out at the commit below:
 #   ACE commit: a49b467a07d721eae5c60de29a73af2ecb032c21 (branch exp/alexey8)
 #   https://github.com/ai2cm/ace/tree/a49b467a07d721eae5c60de29a73af2ecb032c21

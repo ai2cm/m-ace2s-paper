@@ -1,6 +1,6 @@
 # M-ACE2S paper | 1deg, GMR on, uniform masking (up to 20 vars) | multi-step fine-tuning (20 epochs)
 #
-# Exact config run for the paper (body below is unmodified).
+# Exact config run for the paper (YAML content unmodified; leading comments from the original removed).
 # Run from the root of https://github.com/ai2cm/ace checked out at the commit below:
 #   ACE commit: f47edc364c376dacffbc66206b309106bb771b5c (branch alexey8-mstepft)
 #   https://github.com/ai2cm/ace/tree/f47edc364c376dacffbc66206b309106bb771b5c

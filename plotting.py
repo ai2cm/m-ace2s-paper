@@ -92,10 +92,10 @@ LOSS_OVERLAY = {"val/mean/loss": "train/mean/loss"}
 
 VAR_LABELS = {
     "surface_temperature": ("<i>T</i><sub>s</sub>", "K", 0),
-    "air_temperature_0": ("<i>T</i><sub>0</sub>", "K", 0),
     "air_temperature_7": ("<i>T</i><sub>7</sub>", "K", 0),
     "specific_total_water_3": ("<i>q</i><sup>T</sup><sub>3</sub>",
                                "kg kg<sup>−1</sup>", -4),
+    # P_sfc is surface precipitation rate (PRATEsfc), not surface pressure (p_s, below).
     "PRATEsfc": ("<i>P</i><sub>sfc</sub>", "kg m<sup>−2</sup> s<sup>−1</sup>", -5),
     "total_water_path": ("<i>TWP</i>", "kg m<sup>−2</sup>", 0),
 }
@@ -111,7 +111,6 @@ PDF_TITLES = {
     "aimip_checkpoint/time_mean_norm/rmse/channel_mean":
         "5-Year Inference Error (normalized RMSE)",
     "val/mean/loss": "Loss (solid = validation, dashed = training)",
-    "long_46year/annual/air_temperature_0": "Annual-Mean Air Temperature (level 0)",
     "long_46year/annual/air_temperature_7": "Annual-Mean Air Temperature (level 7)",
     "long_46year/annual/specific_total_water_3": "Annual-Mean Specific Total Water (level 3)",
     "long_46year/annual/PRATEsfc": "Annual-Mean Surface Precipitation Rate",
@@ -690,8 +689,8 @@ V5_LARGE_FONT_FILES = {
     "aimip_checkpoint_time_mean_norm_rmse_channel_mean-gmron",
     "aimip_checkpoint_time_mean_norm_rmse_channel_mean-gmroff",
     *(f"long_46year_annual_{v}-{g}-mstepftbestinf"
-      for v in ("air_temperature_0", "specific_total_water_3",
-                "total_water_path", "PRATEsfc") for g in ("gmroff", "gmron")),
+      for v in ("specific_total_water_3", "total_water_path", "PRATEsfc")
+      for g in ("gmroff", "gmron")),
     "long_46year_time_mean_rmse-gmron-mstepftbestinf",
     "long_46year_time_mean_rmse-mstepftbestinf",
 }
@@ -817,7 +816,7 @@ BERN_LEGEND_LABELS = {
 }
 V3_LARGE_FONT_FILES = {
     *(f"long_46year_annual_{v}-{g}"
-      for v in ("air_temperature_7", "air_temperature_0", "specific_total_water_3",
+      for v in ("air_temperature_7", "specific_total_water_3",
                 "total_water_path", "PRATEsfc") for g in ("gmroff", "gmron")),
     "val_mean_loss-gmron", "val_mean_loss-gmroff",
     "aimip_checkpoint_time_mean_norm_rmse_channel_mean-gmron",
@@ -1105,10 +1104,9 @@ FIGURES = [
     Figure(_D1, "fig:46yr_era5_training_metrics_1deg_gmroff", "5-year inference error, GMR off, 1°", "v5",
            _V5 + "aimip_checkpoint_time_mean_norm_rmse_channel_mean-gmroff.pdf"),
 ]
-for _var, _short, _lab in [("air_temperature_0", "T0", "T0"),
-                           ("specific_total_water_3", "q^T_3", "Q3"),
+for _var, _short, _lab in [("specific_total_water_3", "q^T_3", "Q3"),
                            ("total_water_path", "TWP", "TWP"),
-                           ("PRATEsfc", "P_sfc", "Psfc")]:
+                           ("PRATEsfc", "surface precipitation rate (P_sfc, `PRATEsfc`)", "Psfc")]:
     for _g, _gt in (("gmroff", "GMR off"), ("gmron", "GMR on")):
         FIGURES.append(Figure(_D1, f"fig:46yr_era5_{_lab}_1deg",
                               f"Annual-mean {_short}, {_gt}, 1°", "v5",
@@ -1120,10 +1118,9 @@ FIGURES += [
            _V5 + "long_46year_time_mean_bias-mstepftbestinf.pdf"),
 ]
 for _var, _short, _lab in [("air_temperature_7", "T7", "T7"),
-                           ("air_temperature_0", "T0", "T0"),
                            ("specific_total_water_3", "q^T_3", "Q3"),
                            ("total_water_path", "TWP", "TWP"),
-                           ("PRATEsfc", "P_sfc", "Psfc")]:
+                           ("PRATEsfc", "surface precipitation rate (P_sfc, `PRATEsfc`)", "Psfc")]:
     for _g, _gt in (("gmroff", "GMR off"), ("gmron", "GMR on")):
         FIGURES.append(Figure(_D4, f"fig:46yr_era5_{_lab}_4deg",
                               f"Annual-mean {_short}, {_gt}, 4°", "v3",

@@ -1,6 +1,6 @@
 # M-ACE2S paper | 4deg, GMR on, uniform masking (up to 10 vars), one mask per sample (batch-vs-sample ablation) | evaluation (inference suite)
 #
-# Exact config run for the paper (body below is unmodified).
+# Exact config run for the paper (YAML content unmodified; leading comments from the original removed).
 # Run from the root of https://github.com/ai2cm/ace checked out at the commit below:
 #   ACE commit: c82b1919bc22ef687ee37c1ab415971defb06123 (branch exp/alexey8-shared-mask)
 #   https://github.com/ai2cm/ace/tree/c82b1919bc22ef687ee37c1ab415971defb06123
