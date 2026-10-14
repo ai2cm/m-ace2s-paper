@@ -22,8 +22,7 @@ import yaml
 
 from plotting import HERE, YEAR_SPANS, _group
 
-# md_caption: LaTeX caption for TABLES.md when it differs from the .tex caption.
-Table = namedtuple("Table", "name df tex md md_caption", defaults=(None,))
+Table = namedtuple("Table", "name df tex md")
 
 _SUPERSCRIPT = str.maketrans("-0123456789a", "⁻⁰¹²³⁴⁵⁶⁷⁸⁹ᵃ")
 
@@ -31,7 +30,8 @@ _SUPERSCRIPT = str.maketrans("-0123456789a", "⁻⁰¹²³⁴⁵⁶⁷⁸⁹ᵃ"
 def md(s):
     """The LaTeX used in these tables, as Markdown/Unicode."""
     s = re.sub(r"\\textbf\{([^}]*)\}", r"**\1**", s)
-    s = re.sub(r"\\textit\{([^}]*)\}", r"*\1*", s)
+    s = re.sub(r"\\(?:textit|emph)\{([^}]*)\}", r"*\1*", s)
+    s = re.sub(r"\\hyperref\[[^]]*\]\{([^}]*)\}", r"\1", s)
     s = re.sub(r"\\(?:auto)?ref\{([^}]*)\}", r"`\1`", s)
     s = re.sub(r"\^\{([-0-9a-z]+)\}", lambda m: m.group(1).translate(_SUPERSCRIPT), s)
     for a, b in [("$-$", "−"), (r"\pm", "±"), (r"\textdegree{}", "°"), (r"\textdegree\ ", "° "),
@@ -45,14 +45,14 @@ def tex(s):
     return s.replace("°", r"\textdegree{}")
 
 
-def _latex(caption, label, colspec, body, setup=(r"\small",), shrink=False):
+def _latex(caption, label, colspec, body, setup=(r"\small",), shrink=False, placement="H"):
     """booktabs table; `shrink` scales a table wider than the text down to fit."""
     tabular = ([rf"\begin{{tabular}}{{{colspec}}}"] + ["  " + b for b in body]
                + [r"\end{tabular}"])
     if shrink:
         tabular = [r"\resizebox{\linewidth}{!}{%"] + tabular + ["}"]
-    return "\n".join([r"\begin{table}[H]", rf"  \caption{{{caption}}}", rf"  \label{{{label}}}",
-                      r"  \centering"] + ["  " + x for x in list(setup) + tabular]
+    return "\n".join([rf"\begin{{table}}[{placement}]", rf"  \caption{{{caption}}}",
+                      rf"  \label{{{label}}}", r"  \centering"] + ["  " + x for x in list(setup) + tabular]
                      + [r"\end{table}", ""])
 
 
@@ -114,10 +114,13 @@ def _num(v, decimals):
     return s.replace("-", "$-$")
 
 
-def trend_table(data, var, res):
-    """RMSE, bias and trend error of `var` for the `res` ("1°" or "4°") models."""
+def trend_table(data, var, res, gmr=None, name=None, caption=None, placement="H"):
+    """RMSE, bias and trend error of `var` for the `res` ("1°" or "4°") models,
+    optionally only those with `gmr` ("GMR off" or "GMR on"); `name` and
+    `caption` replace the defaults."""
     prefix, symbol, unit = VARS[var]
-    scores = run_scores(data, var, [r for r in ROWS if r.res == res])
+    scores = run_scores(data, var, [r for r in ROWS
+                                    if r.res == res and gmr in (None, r.gmr)])
     keys = ["gmr", "model"]
     g = scores.drop(columns=["res", "source", "base", "run"]).groupby(keys, sort=False)
     mean, std, n = g.mean(), g.std(), g.size()
@@ -151,8 +154,8 @@ def trend_table(data, var, res):
     body.append(r"\bottomrule")
     runs = (f"Values are mean $\\pm$ standard deviation over {n.max()} seeds"
             if n.max() > 1 else "Each model is a single training run")
-    name = f"{prefix}_trend_{res.replace('°', 'deg')}"
-    caption = (
+    name = name or f"{prefix}_trend_{res.replace('°', 'deg')}"
+    caption = caption or (
         rf"Errors of the annual global-mean {symbol} of the 46-year ERA5 rollouts of the "
         rf"{tex(res)} models over the AIMIP training (1979--2008) and test (2015--2024) "
         r"periods. RMSE: root-mean-square of model minus ERA5 over the years of the "
@@ -161,8 +164,27 @@ def trend_table(data, var, res):
         rf"{runs}; bold marks the smaller magnitude of each ACE2S / M-ACE2S pair.")
     df = mean[cols].join(std[cols], rsuffix="_std").join(n.rename("n_seeds")).reset_index()
     return Table(name, df, _latex(caption, f"table:{name}", "lcccccc", body,
-                                  shrink=n.max() > 1),
+                                  shrink=n.max() > 1, placement=placement),
                  "\n".join(md_lines) + "\n")
+
+
+def t7_1deg_tables(data):
+    """The paper's two 1° T7 tables: GMR on (main text) and GMR off (appendix)."""
+    var = "air_temperature_7"
+    on = trend_table(
+        data, var, "1°", gmr="GMR on", placement="ht", caption=(
+            r"Errors of the annual global-mean $T_7$ for ERA5 over the AIMIP training "
+            r"(1979--2008) and test (2015--2024) periods. RMSE: root-mean-square of model "
+            r"minus ERA5 over the years of the period. Bias: mean of model minus ERA5. Trend "
+            r"error: model minus ERA5 least-squares linear trend. Bold marks the smaller "
+            r"magnitude of each pair."))
+    off = trend_table(
+        data, var, "1°", gmr="GMR off", name="t7_trend_1deg_gmroff", caption=(
+            r"Errors of the annual global-mean $T_7$ of the 46-year ERA5 rollouts of the "
+            r"1\textdegree{} models trained \emph{without} global mean removal (GMR off), "
+            r"over the AIMIP training (1979--2008) and test (2015--2024) periods. Columns and "
+            r"conventions follow \autoref{table:t7_trend_1deg}."))
+    return on, off
 
 
 # ── configurations ────────────────────────────────────────────────────────────
@@ -246,16 +268,10 @@ def config_rows(config_dir=CONFIG_DIR):
         if name == "Mask indicator":
             masking += ", " + " / ".join(i for i in _INDICATORS.values()
                                          if any(c["indicator"] == i for c in members))
-        seeds = {tuple(c["seeds"]) for c in members}
-        if len(seeds) == 1:
-            (s,) = seeds
-            seed_text = f"{s[0]}--{s[-1]}" if len(s) > 2 else ", ".join(map(str, s))
-        else:
-            assert all(len(s) == 1 for s in seeds), (name, seeds)
-            seed_text = "1$^{a}$"
+        (n_seeds,) = {len(c["seeds"]) for c in members}
         rows.append(dict(experiment=name, data=f"{res}, " + _join(c["dt"] for c in members),
                          gmr=_join(sorted(c["gmr"] for c in members)),
-                         masking=masking, seeds=seed_text,
+                         masking=masking, seeds=str(n_seeds),
                          stages=_join(c["stages"] for c in members), shown=shown,
                          n_configs=len(members)))
     unused = {(c["stem"], c["res"]) for c in configs} - used
@@ -279,27 +295,19 @@ def config_table(config_dir=CONFIG_DIR):
         md_lines.append("| " + " | ".join(md(c) for c in cells) + " |")
     body.append(r"\bottomrule")
     caption = (
-        r"Trained configurations, one row per experiment; the released configuration files "
-        r"give every run. Data: horizontal resolution and time step of the ERA5 training "
-        r"data. Masking: uniform 0--$k$ masks a number of input channels drawn "
-        r"uniformly from $\{0, \ldots, k\}$, Bernoulli masks each channel with probability "
-        r"$p$; unless stated, {sharing} the model is told which "
-        r"channels are masked by appended channels. Epochs: single-step (SS) and multi-step "
+        r"Trained configurations. See \hyperref[fn:code_availability]{code availability} "
+        r"for links to source code and raw training configurations. Data: horizontal "
+        r"resolution and time step of the ERA5 training data. Masking: uniform 0--$k$ masks "
+        r"a number of input channels drawn uniformly from $\{0, \ldots, k\}$, Bernoulli "
+        r"masks each channel with probability $p$; unless stated, one mask is shared across "
+        r"each GPU's batch and the model is told which channels are masked by appended "
+        r"channels. Seeds: number of trained seeds. Epochs: single-step (SS) and multi-step "
         r"(MS) training (\autoref{appendix:multistep_finetuning}). Shown in: section or "
-        r"appendix with the results. No configuration takes "
-        r"CO$_2$ or any other anthropogenic forcing as an input. $^{a}$One seed per "
-        r"model: seed 1, except seed 0 for M-ACE2S with GMR.")
-    # The .tex keeps the paper's wording; TABLES.md states how masks are actually shared:
-    # each GPU draws its own mask (seeded by rank) and shares it across its local batch.
-    tex_caption = caption.replace("{sharing}", "one mask is shared across each GPU's batch and")
-    md_caption = caption.replace(
-        "{sharing}", "one mask is drawn per GPU at each forward step and shared by that "
-        "GPU's samples (4 at 4°, 1 in 1° pretraining, 2 in 1° fine-tuning; masks differ "
-        "across GPUs), and")
+        r"appendix with the results.")
     return Table("configurations", pd.DataFrame(rows),
-                 _latex(tex_caption, "table:configurations", r"lllp{3.3cm}lll", body,
+                 _latex(caption, "table:configurations", r"lllp{3.3cm}lll", body,
                         setup=[r"\small", r"\setlength{\tabcolsep}{4pt}"]),
-                 "\n".join(md_lines) + "\n", md_caption)
+                 "\n".join(md_lines) + "\n")
 
 
 # ── output ────────────────────────────────────────────────────────────────────
@@ -325,7 +333,7 @@ def write_tables_md(tables, path=os.path.join(HERE, "TABLES.md")):
              "Generated by `paper_tables.ipynb`. LaTeX in `tables/<name>.tex`, unrounded "
              "values in `tables/<name>.csv`.", ""]
     for t in tables:
-        caption = t.md_caption or re.search(r"\\caption\{(.*)\}\n", t.tex).group(1)
+        caption = re.search(r"\\caption\{(.*)\}\n", t.tex).group(1)
         lines += [f"## `{t.name}`", "", md(caption), "", t.md]
     with open(path, "w") as f:
         f.write("\n".join(lines))

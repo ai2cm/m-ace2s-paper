@@ -1,6 +1,6 @@
 experiment,data,gmr,masking,seeds,stages,shown,n_configs
-Main,"1°, 6 h","off, on","none, uniform 0--20",1$^{a}$,150 SS + 20 MS,"\ref{sec:results}, \ref{appendix:additional_1deg_results}",4
-Main,"4°, 1 day","off, on","none, uniform 0--20",0--4,150 SS,\ref{appendix:additional_4deg_results},4
-Mask distribution,"4°, 1 day","off, on",Bernoulli $p = 0.23$,0--4,150 SS,\ref{appendix:masking_ablations},2
-Mask sharing,"4°, 1 day",on,"uniform 0--10 / 0--20, per batch / sample",0,150 SS,\ref{appendix:masking_ablations},4
-Mask indicator,"4°, 1 day",on,"uniform 0--20, channels / FiLM / both",0,150 SS,\ref{appendix:masking_ablations},3
+Main,"1°, 6 h","off, on","none, uniform 0--20",1,150 SS + 20 MS,"\ref{sec:results}, \ref{appendix:additional_1deg_results}",4
+Main,"4°, 1 day","off, on","none, uniform 0--20",5,150 SS,\ref{appendix:additional_4deg_results},4
+Mask distribution,"4°, 1 day","off, on",Bernoulli $p = 0.23$,5,150 SS,\ref{appendix:masking_ablations},2
+Mask sharing,"4°, 1 day",on,"uniform 0--10 / 0--20, per batch / sample",1,150 SS,\ref{appendix:masking_ablations},4
+Mask indicator,"4°, 1 day",on,"uniform 0--20, channels / FiLM / both",1,150 SS,\ref{appendix:masking_ablations},3

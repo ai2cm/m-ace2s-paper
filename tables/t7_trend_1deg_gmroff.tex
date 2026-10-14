@@ -1,0 +1,16 @@
+\begin{table}[H]
+  \caption{Errors of the annual global-mean $T_7$ of the 46-year ERA5 rollouts of the 1\textdegree{} models trained \emph{without} global mean removal (GMR off), over the AIMIP training (1979--2008) and test (2015--2024) periods. Columns and conventions follow \autoref{table:t7_trend_1deg}.}
+  \label{table:t7_trend_1deg_gmroff}
+  \centering
+  \small
+  \begin{tabular}{lcccccc}
+    \toprule
+     & \multicolumn{2}{c}{RMSE (K)} & \multicolumn{2}{c}{Bias (K)} & \multicolumn{2}{c}{Trend error (K\,decade$^{-1}$)} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+     & Train & Test & Train & Test & Train & Test \\
+    \midrule
+    ACE2S (GMR off) & 0.14 & \textbf{0.30} & 0.11 & \textbf{$-$0.27} & $-$0.058 & $-$0.299 \\
+    M-ACE2S (GMR off) & \textbf{0.10} & 0.51 & \textbf{0.03} & $-$0.49 & \textbf{$-$0.025} & \textbf{$-$0.243} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
